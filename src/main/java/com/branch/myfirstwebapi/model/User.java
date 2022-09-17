@@ -2,17 +2,17 @@ package com.branch.myfirstwebapi.model;
 
 public class User {
     private Integer id;
-    private String username;
+    private String login;
     private String password;
     public User() {}
     public User(String login, String password) {
-        this.username = login;
+        this.login = login;
         this.password = password;
     }
     @Override
     public String toString() {
         return "User{" +
-                "login='" + username + '\'' +
+                "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -23,10 +23,10 @@ public class User {
 		this.id = id;
 	}
 	public String getLogin() {
-		return username;
+		return login;
 	}
 	public void setLogin(String login) {
-		this.username = login;
+		this.login = login;
 	}
 	public String getPassword() {
 		return password;
