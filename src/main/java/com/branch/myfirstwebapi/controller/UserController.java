@@ -20,6 +20,7 @@ import com.branch.myfirstwebapi.repository.UserRepository;
 public class UserController {
 	 @Autowired
 	    private UserRepository repository;
+	 
 	    @GetMapping
 	    public List<User> list(){
 	        return repository.findAll();
@@ -32,9 +33,9 @@ public class UserController {
 	    public void update(@RequestBody User user){
 	        repository.save(user);
 	    }
-	    @GetMapping("/{username}")
-	    public User find(@PathVariable("username") String username){
-	        return repository.findByUsername(username);
+	    @GetMapping("/{id}")
+	    public User find(@PathVariable("id") Integer id){
+	        return repository.findById(id);
 	    }
 	    @DeleteMapping("/{id}")
 	    public void delete(@PathVariable("/id") Integer id){
