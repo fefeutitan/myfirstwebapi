@@ -19,10 +19,9 @@ public class User {
     
     public User() {}
     
-    public User(String nome, String email, String password) {
+    public User(String nome, String email) {
         this.nome = nome;
         this.email = email;
-        this.password = password;
     }
     @Override
     public String toString() {
