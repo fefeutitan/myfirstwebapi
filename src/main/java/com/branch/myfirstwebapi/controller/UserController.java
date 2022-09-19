@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.branch.myfirstwebapi.controller.dto.UserDto;
+import com.branch.myfirstwebapi.controller.form.UpdateUserForm;
 import com.branch.myfirstwebapi.controller.form.UserForm;
 import com.branch.myfirstwebapi.model.User;
 import com.branch.myfirstwebapi.repository.UserRepository;
@@ -42,13 +44,16 @@ public class UserController {
 	        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
 			return ResponseEntity.created(uri).body(new UserDto(user));
 	    }
-	    @PutMapping
-	    public void update(@RequestBody User user){
-	        repository.save(user);
+	    @PutMapping("/{id}")
+	    @Transactional	
+	    public ResponseEntity<UserDto> update(@PathVariable Integer id,@RequestBody @Valid UpdateUserForm form){
+	    	User user =  form.update(id, repository);
+			return ResponseEntity.ok(new UserDto(user));
 	    }
 	    @GetMapping("/{id}")
-	    public User find(@PathVariable("id") Integer id){
-	        return repository.findById(id);
+	    public UserDto find(@PathVariable Integer id){
+	    	User user = repository.getReferenceById(id);
+	    	return new UserDto(user);
 	    }
 	    @DeleteMapping("/{id}")
 	    public void delete(@PathVariable("/id") Integer id){
