@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +36,7 @@ public class UserController {
 	        return UserDto.converter(users);
 	    }
 	    @PostMapping
-	    public ResponseEntity<UserDto> save(@RequestBody UserForm form, UriComponentsBuilder uriBuilder){
+	    public ResponseEntity<UserDto> save(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder){
 	    	User user = form.converter();
 	        repository.save(user);
 	        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
