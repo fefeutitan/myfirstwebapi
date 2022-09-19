@@ -38,6 +38,7 @@ public class UserController {
 	        return UserDto.converter(users);
 	    }
 	    @PostMapping
+	    @Transactional	
 	    public ResponseEntity<UserDto> save(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder){
 	    	User user = form.converter();
 	        repository.save(user);
@@ -56,7 +57,9 @@ public class UserController {
 	    	return new UserDto(user);
 	    }
 	    @DeleteMapping("/{id}")
-	    public void delete(@PathVariable("/id") Integer id){
+	    @Transactional	
+	    public ResponseEntity<?> delete(@PathVariable Integer id){
 	        repository.deleteById(id);
+			return ResponseEntity.ok().build();
 	    }
 }
