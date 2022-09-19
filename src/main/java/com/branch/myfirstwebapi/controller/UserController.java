@@ -3,6 +3,7 @@ package com.branch.myfirstwebapi.controller;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -31,35 +32,50 @@ import com.branch.myfirstwebapi.repository.UserRepository;
 public class UserController {
 	 @Autowired
 	    private UserRepository repository;
+		 
+		 @PostMapping
+		 @Transactional	
+		 public ResponseEntity<UserDto> save(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder){
+			 User user = form.converter();
+			 repository.save(user);
+			 URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+			 return ResponseEntity.created(uri).body(new UserDto(user));
+		 }
 	 
 	    @GetMapping
 	    public List<UserDto> list(){
 	    	List<User> users = repository.findAll();
 	        return UserDto.converter(users);
 	    }
-	    @PostMapping
-	    @Transactional	
-	    public ResponseEntity<UserDto> save(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder){
-	    	User user = form.converter();
-	        repository.save(user);
-	        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
-			return ResponseEntity.created(uri).body(new UserDto(user));
+	    
+	    @GetMapping("/{id}")
+	    public ResponseEntity<UserDto> find(@PathVariable Integer id){
+	    	Optional<User> user = repository.findById(id);
+	    	if(user.isPresent()) {
+	    		return ResponseEntity.ok(new UserDto(user.get()));	    		
+	    	}
+	    	return ResponseEntity.notFound().build();
 	    }
+	    
 	    @PutMapping("/{id}")
 	    @Transactional	
 	    public ResponseEntity<UserDto> update(@PathVariable Integer id,@RequestBody @Valid UpdateUserForm form){
-	    	User user =  form.update(id, repository);
-			return ResponseEntity.ok(new UserDto(user));
+	    	Optional<User> optional = repository.findById(id);
+	    	if(optional.isPresent()) {
+	    		User user =  form.update(id, repository);
+		    	return ResponseEntity.ok(new UserDto(user));    		
+	    	}
+	    	return ResponseEntity.notFound().build();
 	    }
-	    @GetMapping("/{id}")
-	    public UserDto find(@PathVariable Integer id){
-	    	User user = repository.getReferenceById(id);
-	    	return new UserDto(user);
-	    }
+	    
 	    @DeleteMapping("/{id}")
 	    @Transactional	
 	    public ResponseEntity<?> delete(@PathVariable Integer id){
-	        repository.deleteById(id);
-			return ResponseEntity.ok().build();
+	    	Optional<User> optional = repository.findById(id);
+	    	if(optional.isPresent()) {
+	    		repository.deleteById(id);
+	    		return ResponseEntity.ok().build();
+	    	}
+	    	return ResponseEntity.notFound().build();
 	    }
 }
