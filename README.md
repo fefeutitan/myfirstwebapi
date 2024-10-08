@@ -49,6 +49,31 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir um issue ou envi
 ## Licença
 Este projeto está licenciado sob a Licença MIT.
 
+## Diagrama de Classes
+classDiagram
+    class Usuario {
+        +int id
+        +string nome
+        +string email
+        +string password
+        +string cpf
+    }
+    
+    class Endereco {
+        +string rua
+        +string numero
+        +string complemento
+        +string bairro
+    }
+    
+    class Telefone {
+        +string numero
+    }
+
+    Usuario --> Endereco : possui
+    Usuario --> Telefone : possui *    
+
+
 # fefeutitan
 
 ## Conecte-se comigo
