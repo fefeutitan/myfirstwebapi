@@ -1,6 +1,7 @@
 # My First Web API
 
-Este repositório contém o estudo da API REST e a implementação dele é praticar e relembrar conceitos.
+- Este repositório contém a implementação do meu estudo de uma API REST.
+- A intenção principal dele é praticar e relembrar conceitos.
 
 ## Tecnologias Utilizadas
 
