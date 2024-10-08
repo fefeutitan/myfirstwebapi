@@ -89,4 +89,5 @@ classDiagram
     }
 
     Usuario --> Endereco : possui
-    Usuario --> Telefone : possui ```   
+    Usuario --> Telefone : possui
+```   
