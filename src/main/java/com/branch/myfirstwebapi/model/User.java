@@ -16,19 +16,21 @@ public class User {
     private String nome;
     private String email; 
     private String password;
+    private String cpf;
     
     public User() {}
     
-    public User(String nome, String email) {
+    public User(String nome, String email, String cpf) {
         this.nome = nome;
         this.email = email;
+        this.cpf = cpf;
     }
     @Override
     public String toString() {
         return "User{" +
                 "nome='" + nome + '\'' +
                 "email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", cpf='" + cpf + '\'' +
                 '}';
     }
 	public Integer getId() {
@@ -54,6 +56,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String email) {
+		this.cpf = cpf;
 	}
 
 }
