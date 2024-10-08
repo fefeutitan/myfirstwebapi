@@ -7,9 +7,7 @@ Este repositório contém o estudo da API REST e a implementação de um teste p
 - **Java 1.8**: Linguagem de programação principal.
 - **Spring Boot 2.7.3**: Framework para criar aplicações Java baseadas em Spring.
 - **Maven**: Ferramenta de gerenciamento de projetos e dependências.
-- **PostgreSQL**: Banco de dados utilizado para persistência de dados.
 - **H2 Database**: Banco de dados em memória utilizado para testes.
-- **JUnit**: Framework para testes unitários.
 - **Springfox (Swagger)**: Para documentação da API.
 - **Spring Boot DevTools**: Para facilitar o desenvolvimento com recursos como reinicialização automática.
 
