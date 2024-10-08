@@ -50,6 +50,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir um issue ou envi
 Este projeto está licenciado sob a Licença MIT.
 
 ## Diagrama de Classes
+```mermaid
 classDiagram
     class Usuario {
         -int id
