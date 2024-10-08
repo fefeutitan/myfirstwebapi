@@ -52,22 +52,24 @@ Este projeto está licenciado sob a Licença MIT.
 ## Diagrama de Classes
 classDiagram
     class Usuario {
-        +int id
-        +string nome
-        +string email
-        +string password
-        +string cpf
+        -int id
+        -string nome
+        -string email
+        -string password
+        -string cpf
+		-Endereco endereco
+		-Telefone[] telefone
     }
     
     class Endereco {
-        +string rua
-        +string numero
-        +string complemento
-        +string bairro
+        -string rua
+        -string numero
+        -string complemento
+        -string bairro
     }
     
     class Telefone {
-        +string numero
+        -string numero
     }
 
     Usuario --> Endereco : possui
