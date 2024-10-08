@@ -24,12 +24,15 @@ Este repositório contém o estudo da API REST e a implementação de um teste p
    git clone https://github.com/fefeutitan/myfirstwebapi.git
    
 2. Navegue até o diretório do projeto:
+   ```bash
    cd myfirstwebapi
 
 3. Compile o projeto:
+   ```bash
    mvn clean install
 
 4. Execute a aplicação:
+   ```bash
    mvn spring-boot:run
 
 ## Testando a API
