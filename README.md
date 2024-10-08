@@ -58,7 +58,7 @@ classDiagram
         -string email
         -string password
         -string cpf
-		-Endereco endereco
+		-Endereco[] endereco
 		-Telefone[] telefone
     }
     
@@ -73,8 +73,8 @@ classDiagram
         -string numero
     }
 
-    Usuario --> Endereco : possui
-    Usuario --> Telefone : possui
+    Usuario "1" *-- "N" Endereco : possui
+    Usuario "1" *-- "N"  Telefone : possui
 ```   
 
 # fefeutitan
