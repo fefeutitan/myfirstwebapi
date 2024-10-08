@@ -1,6 +1,6 @@
 # My First Web API
 
-Este repositório contém o estudo da API REST e a implementação de um teste para praticar e relembrar conceitos.
+Este repositório contém o estudo da API REST e a implementação dele é praticar e relembrar conceitos.
 
 ## Tecnologias Utilizadas
 
@@ -39,16 +39,11 @@ Este repositório contém o estudo da API REST e a implementação de um teste p
 Utilize uma ferramenta como [Postman](https://www.postman.com/) ou [cURL](https://curl.se/) para fazer requisições à API.
 
 ## Exemplos de Requisições
-GET /api/endpoint: Obtém todos os itens.
-POST /api/endpoint: Cria um novo item.
+- GET /api/endpoint: Obtém todos os itens.
+- POST /api/endpoint: Cria um novo item.
 
 ## Contribuições
 Contribuições são bem-vindas! Sinta-se à vontade para abrir um issue ou enviar um pull request.
 
 ## Licença
 Este projeto está licenciado sob a Licença MIT.
-
-### O que foi adicionado:
-- **H2 Database**: Informações sobre o banco de dados em memória utilizado para testes.
-- **Springfox**: Destaque para a documentação da API.
-- **Spring Boot DevTools**: Mencionei esse plugin para desenvolvimento.
