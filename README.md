@@ -1,93 +1,88 @@
 # My First Web API
 
-- Este repositório contém a implementação do meu estudo de uma API REST.
-- A intenção principal dele é praticar e relembrar conceitos.
+A hands-on Java REST API learning project focused on CRUD operations, input validation, persistence and HTTP response handling.
 
-## Tecnologias Utilizadas
+> **Scope:** Educational project for practicing and revisiting Spring Boot concepts; not presented as a production system.
 
-- **Java 1.8**: Linguagem de programação principal.
-- **Spring Boot 2.7.3**: Framework para criar aplicações Java baseadas em Spring.
-- **Maven**: Ferramenta de gerenciamento de projetos e dependências.
-- **H2 Database**: Banco de dados em memória utilizado para testes.
-- **Springfox (Swagger)**: Para documentação da API.
-- **Spring Boot DevTools**: Para facilitar o desenvolvimento com recursos como reinicialização automática.
+## Stack
 
-## Estrutura do Projeto
+- Java 8, Spring Boot 2.7.3 and Maven
+- Spring Web, Spring Data JPA and Bean Validation
+- H2 in-memory database
+- Springfox Swagger 2 / Swagger UI 2.9.2
+- Spring Boot DevTools and Spring Boot Test
 
-- `src/main/java`: Contém o código-fonte da aplicação.
-- `src/main/resources`: Contém arquivos de configuração e recursos.
-- `src/test/java`: Contém os testes unitários.
+## Architecture
 
-## Como Executar o Projeto
+The source uses a straightforward controller–repository approach:
 
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/fefeutitan/myfirstwebapi.git
-   
-2. Navegue até o diretório do projeto:
-   ```bash
-   cd myfirstwebapi
+```text
+HTTP request
+    |
+    v
+UserController (/users)
+    |-- UserForm / UpdateUserForm (input + validation)
+    |-- UserDto (response representation)
+    v
+UserRepository (Spring Data JPA)
+    v
+User entity -> H2 database
+```
 
-3. Compile o projeto:
-   ```bash
-   mvn clean install
+The `UserController` accesses `UserRepository` directly; a separate service layer is **not** claimed here. Validation errors are handled through a dedicated controller advice class. The repository also includes a welcome controller.
 
-4. Execute a aplicação:
-   ```bash
-   mvn spring-boot:run
+## API endpoints
 
-## Testando a API
-Utilize uma ferramenta como [Postman](https://www.postman.com/) ou [cURL](https://curl.se/) para fazer requisições à API.
+Verified against `UserController.java`:
 
-## Exemplos de Requisições
-- GET /api/endpoint: Obtém todos os itens.
-- POST /api/endpoint: Cria um novo item.
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/users` | List users |
+| GET | `/users/{id}` | Get one user (404 if absent) |
+| POST | `/users` | Create a user from a validated request body |
+| PUT | `/users/{id}` | Update an existing user |
+| DELETE | `/users/{id}` | Delete an existing user |
 
-## Contribuições
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um issue ou enviar um pull request.
+The POST handler returns HTTP 201 and a DTO. **Known detail:** its `Location` header is built using `/user/{id}` (singular), while the controller is mapped to `/users` (plural). This README documents the current behavior rather than changing it.
 
-## Licença
-Este projeto está licenciado sob a Licença MIT.
+Request field names and validation rules should be checked in `UserForm` and `UpdateUserForm` before constructing POST/PUT payloads.
 
-## Diagrama de Classes
-```mermaid
-classDiagram
-    class Usuario {
-        -int id
-        -string nome
-        -string email
-        -string password
-        -string cpf
-		-Endereco[] endereco
-		-Telefone[] telefone
-    }
-    
-    class Endereco {
-        -string rua
-        -string numero
-        -string complemento
-        -string bairro
-    }
-    
-    class Telefone {
-        -string numero
-    }
+## Run locally
 
-    Usuario "1" *-- "N" Endereco : possui
-    Usuario "1" *-- "N"  Telefone : possui
-```   
+Prerequisites: JDK 8 and Maven.
 
-# fefeutitan
+```bash
+git clone https://github.com/fefeutitan/myfirstwebapi.git
+cd myfirstwebapi
+mvn clean package
+mvn spring-boot:run
+```
 
-## Conecte-se comigo
+The default H2 configuration is `jdbc:h2:mem:alura-forum`, user `sa`, blank password. The H2 console is configured at `/h2-console`.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fernando-ellery-133a209/)
+Try the read endpoint after startup:
 
-## Skills:
+```bash
+curl http://localhost:8080/users
+```
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Vue](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+The default port is 8080 unless overridden. Startup and HTTP responses have not been independently executed for this README update.
 
+## Tests and build
+
+```bash
+mvn test
+mvn clean package
+```
+
+These are the Maven commands supported by the project configuration; test coverage and successful execution have not been verified.
+
+## Notes for maintainers
+
+- Springfox 2.9.2 is an older integration; Swagger UI compatibility may require investigation.
+- The project uses `spring.jpa.hibernate.ddl-auto=update` with an in-memory H2 database.
+- This README intentionally does not claim an MIT license because licensing should be verified against an actual `LICENSE` file.
+
+## Author
+
+[Fernando Ellery](https://github.com/fefeutitan) · [LinkedIn](https://www.linkedin.com/in/fernando-ellery-133a209/)
